@@ -36,12 +36,14 @@ public class RedisConfiguration {
   private String redisHost;
   @Value("${spring.redis.port:6379}")
   private String redisPort;
+  @Value("${spring.redis.password}")
+  private String password;
   // pool configuration
-  @Value("${redis.maxTotal:100}")
+  @Value("${redis.maxTotal:20}")
   private String maxTotal;
-  @Value("${redis.maxIdle:100}")
+  @Value("${redis.maxIdle:20}")
   private String maxIdle;
-  @Value("${redis.minIdle:100}")
+  @Value("${redis.minIdle:20}")
   private String minIdle;
   @Value("${redis.testOnBorrow:true}")
   private String testOnBorrow;
@@ -61,6 +63,7 @@ public class RedisConfiguration {
     logger.debug("redisConnectionFactory");
     JedisConnectionFactory connectionFactory = new JedisConnectionFactory(poolConfig);
     connectionFactory.setUsePool(Boolean.parseBoolean(redisUsePool));
+    connectionFactory.setPassword(password);
     connectionFactory.setHostName(redisHost);
     connectionFactory.setPort(Integer.parseInt(redisPort));
     logger.debug("redisConnectionFactory done!");
